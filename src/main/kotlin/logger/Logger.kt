@@ -33,7 +33,7 @@ internal const val logPath = "./logs"
  * Project's name
  * Change it with your project's name
  */
-internal const val projectName = "project"
+internal const val projectName = "knowledge_graph"
 
 /**
  * The writer for the file
