@@ -1,9 +1,6 @@
 package model
 
 import model.enums.NodeType
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class Node(
     val id: Int,
@@ -24,7 +21,7 @@ class Node(
                 res += "${attribute.key}:${attribute.value} "
             }
 
-            res +=  "}"
+            res += "}"
         }
         res += ")"
 

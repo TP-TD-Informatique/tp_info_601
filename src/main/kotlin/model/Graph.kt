@@ -3,9 +3,6 @@ package model
 import logger.info
 import logger.success
 import model.enums.NodeType
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class Graph(private val nodes: ArrayList<Node>, private val relations: ArrayList<Relation>, private var index: Int) {
 
@@ -27,18 +24,41 @@ class Graph(private val nodes: ArrayList<Node>, private val relations: ArrayList
         return createNode(name, uri, type, attr)
     }
 
-    fun getNode(name: String? = null, uri: String? = null, type: NodeType? = null, attributes: HashMap<String, Any?>? = null, id: UUID? = null): Node? {
-        var res: Node? = null
+    fun getNode(
+        name: String? = null,
+        uri: String? = null,
+        type: NodeType? = null,
+        attributes: HashMap<String, Any?>? = null,
+        id: Int? = null,
+        offset: Int = 0
+    ): Node? {
+        var off = offset
 
-        nodes.forEach {
+        nodes.forEach { it ->
             // Test simple parameters
             if ((if (name == null) true else it.name == name) &&
                 (if (uri == null) true else it.uri == uri) &&
-                (if (type == null) true else it.type == type)) {
+                (if (type == null) true else it.type == type) &&
+                (if (id == null) true else it.id == id)
+            ) {
                 // Test attributes
+                if (attributes != null) {
+                    if (it.attributes.size == attributes.size) {
+                        var ok = true
+                        it.attributes.forEach { it2 ->
+                            if (attributes[it2.key] != it2.value)
+                                ok = false
+                        }
+
+                        if (ok && off-- == 0) {
+                            return it
+                        }
+                    }
+                }
+
             }
         }
 
-        return res
+        return null
     }
 }
