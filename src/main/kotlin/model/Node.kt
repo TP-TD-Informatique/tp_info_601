@@ -6,7 +6,7 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 class Node(
-    val id: UUID,
+    val id: Int,
     var name: String?,
     var uri: String?,
     val type: NodeType,
