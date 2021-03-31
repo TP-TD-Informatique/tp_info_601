@@ -1,3 +1,7 @@
 package model.enums
 
-enum class RelationType
+enum class RelationType {
+    ;
+
+    override fun toString() = name
+}

@@ -15,4 +15,6 @@ class Graph(private val nodes: ArrayList<Node>, private val relations: ArrayList
         success("Node added to graph")
     }
 
+
+
 }

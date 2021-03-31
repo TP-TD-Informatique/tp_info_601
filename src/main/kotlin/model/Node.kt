@@ -15,12 +15,18 @@ class Node(
 ) {
 
 
-    override fun toString() {
-        var res: String = "($name:$type"
+    override fun toString(): String {
+        var res = "($name:$type"
         if (attributes.isNotEmpty()) {
             res += " {"
 
+            for (attribute in attributes) {
+                res += "${attribute.key}:${attribute.value} "
+            }
+
+            res +=  "}"
         }
+        res += ")"
 
         return res
     }
