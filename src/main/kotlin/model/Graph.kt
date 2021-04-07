@@ -5,8 +5,9 @@ import logger.success
 import logger.warning
 import model.enums.NodeType
 import model.enums.RelationType
+import java.io.*
 
-class Graph(private val nodes: ArrayList<Node>, private val relations: ArrayList<Relation>, private var index: Int) {
+class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList<Relation>, private var index: Int) {
 
     fun createNode(name: String?, uri: String?, type: NodeType, attributes: HashMap<String, Any?>): Node {
         val n = Node(index++, name, uri, type, attributes, ArrayList())
@@ -190,5 +191,92 @@ class Graph(private val nodes: ArrayList<Node>, private val relations: ArrayList
 
         warning("Relation not removed")
         return false
+    }
+
+    // _.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-.
+
+    fun save(databaseName: String) {
+        if (File("./databases").mkdir()) {
+            warning("Dir 'databases' created")
+        }
+
+        saveNodes(databaseName)
+        saveRelations(databaseName)
+        saveIndex(databaseName)
+    }
+
+    private fun saveNodes(databaseName: String) {
+        info("Save ${nodes.size} nodes")
+        try {
+            val oos = ObjectOutputStream(FileOutputStream("./databases/$databaseName.nodes"))
+            oos.writeObject(nodes)
+            oos.close()
+            success("${nodes.size} nodes saved !")
+        } catch (e: IOException) {
+            error("Error when save nodes : ${e.message}")
+        }
+    }
+
+    private fun saveRelations(databaseName: String) {
+        info("Save ${relations.size} relations")
+        try {
+            val oos = ObjectOutputStream(FileOutputStream("./databases/$databaseName.relations"))
+            oos.writeObject(nodes)
+            oos.close()
+            success("${relations.size} relations saved !")
+        } catch (e: IOException) {
+            error("Error when save relations : ${e.message}")
+        }
+    }
+
+    private fun saveIndex(databaseName: String) {
+        info("Save index")
+        try {
+            val dos = DataOutputStream(FileOutputStream("./databases/$databaseName.index"))
+            dos.write(index)
+            dos.close()
+            success("Index saved !")
+        } catch (e: IOException) {
+            error("Error when save index : ${e.message}")
+        }
+    }
+
+    fun load(databaseName: String) {
+        loadNodes(databaseName)
+        loadRelations(databaseName)
+        loadIndex(databaseName)
+    }
+
+    private fun loadNodes(databaseName: String) {
+        info("Load nodes")
+        try {
+            val ois = ObjectInputStream(FileInputStream("./databases/$databaseName.nodes"))
+            nodes = ois.readObject() as ArrayList<Node>
+            success("Nodes loaded !")
+        } catch (e: Exception) {
+            error("Error when load nodes : ${e.message}")
+        }
+    }
+
+    private fun loadRelations(databaseName: String) {
+        info("Load relations")
+        try {
+            val ois = ObjectInputStream(FileInputStream("./databases/$databaseName.relations"))
+            relations = ois.readObject() as ArrayList<Relation>
+            success("Relations loaded !")
+        } catch (e: Exception) {
+            error("Error when load relations : ${e.message}")
+        }
+    }
+
+    private fun loadIndex(databaseName: String) {
+        info("Load index")
+        try {
+            val dis = DataInputStream(FileInputStream("./databases/$databaseName.index"))
+            index = dis.readInt()
+            success("Index loaded")
+        } catch (e: Exception) {
+            error("Error when load index : ${e.message}")
+        }
     }
 }

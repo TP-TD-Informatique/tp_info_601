@@ -1,6 +1,7 @@
 package model
 
 import model.enums.NodeType
+import java.io.Serializable
 
 class Node(
     val id: Int,
@@ -9,8 +10,7 @@ class Node(
     val type: NodeType,
     val attributes: HashMap<String, Any?>,
     val relations: ArrayList<Relation>
-) {
-
+) : Serializable {
 
     override fun toString(): String {
         var res = "($name:$type"

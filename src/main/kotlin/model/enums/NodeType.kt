@@ -1,6 +1,8 @@
 package model.enums
 
-enum class NodeType {
+import java.io.Serializable
+
+enum class NodeType : Serializable {
     ;
 
     override fun toString() = name
