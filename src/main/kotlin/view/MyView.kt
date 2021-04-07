@@ -1,6 +1,9 @@
-import java.awt.event.ActionEvent
-import java.awt.event.KeyEvent
+import java.awt.BorderLayout
+import java.awt.Color
 import javax.swing.*
+import java.awt.FlowLayout
+import javax.swing.JSeparator
+
 
 class MyView : JFrame("Knowledge Graph") {
     init {
@@ -12,40 +15,46 @@ class MyView : JFrame("Knowledge Graph") {
 
         setTitle(title)
 
-        createMenuBar()
+        // creation du panel du dessus (un container)
+        var topPanel = JPanel();
+        topPanel.layout = FlowLayout()
+        topPanel.setBounds(40,80,200,200)
+        topPanel.setBackground(Color.gray)
+
+        // input avec les commandes
+        var input = JTextField("Insérez vos commandes ici.");
+        input.setBounds(50,100, 400,30);
+        topPanel.add(input)
+
+        // bouton pour valider
+        var button = JButton()
+        button.setText("Envoyer")
+        topPanel.add(button)
+
+        // separator
+        var sep = JSeparator()
+        topPanel.add(sep)
+
+        // creation du panel du centre (un container)
+        var centerPanel = JPanel();
+        centerPanel.layout = BorderLayout()
+
+        // ajout des noeuds
+        var node1 = MyNode(20, 20, 100)
+        centerPanel.add(node1)
 
         // la fenêtre doit se fermer quand on clique sur la croix
-        // defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-        defaultCloseOperation = JFrame.DISPOSE_ON_CLOSE
+        defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+        // ?
+        setDefaultLookAndFeelDecorated(true)
         // taille de la fenêtre
         setSize(1000, 800)
-        // on ajoute le texte "Hello, World!" dans la fenêtre
-        contentPane.add(JLabel("Hello, World!"))
+        // on ajoute le panel
+        add(topPanel, BorderLayout.NORTH)
+        add(centerPanel, BorderLayout.CENTER)
         // on centre la fenêtre
         setLocationRelativeTo(null)
         // on rend la fenêtre visible
         isVisible = true
-    }
-
-    // créé la barre de menu en haut à gauche de la fenêtre
-    private fun createMenuBar() {
-        // menu bar
-        val menubar = JMenuBar()
-        val file = JMenu("File")
-
-        file.mnemonic = KeyEvent.VK_F
-
-        // file -> exit
-        val icon = ImageIcon("src/main/resources/exit.png")
-        val eMenuItem = JMenuItem("Exit", icon)
-        eMenuItem.mnemonic = KeyEvent.VK_E
-        eMenuItem.toolTipText = "Exit application"
-        eMenuItem.addActionListener { _: ActionEvent -> System.exit(0) }
-        file.add(eMenuItem)
-
-        // ajout items au menu bar
-        menubar.add(file)
-
-        jMenuBar = menubar
     }
 }
