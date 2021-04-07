@@ -116,22 +116,8 @@ class Graph(private val nodes: ArrayList<Node>, private val relations: ArrayList
 
         if (n != null) {
             relations.forEach {
-                if (it.first == n) {
-                    n.relations.forEach { it2 ->
-                        if (it2.second == it.second) {
-                            n.relations.remove(it2)
-                        }
-                    }
-                    relations.remove(it)
-                    success("Relation removed")
-                } else if (it.second == n) {
-                    it.first.relations.forEach { it2 ->
-                        if (it2.second == n) {
-                            it.first.relations.remove(it2)
-                        }
-                    }
-                    relations.remove(it)
-                    success("Relation removed")
+                if (it.first == n || it.second == n) {
+                    deleteRelation(from = it.first.id, to = it.second.id)
                 }
             }
             nodes.remove(n)
@@ -181,5 +167,28 @@ class Graph(private val nodes: ArrayList<Node>, private val relations: ArrayList
 
         warning("Relation not found")
         return null
+    }
+
+    fun deleteRelation(
+        from: Int,
+        to: Int,
+        type: RelationType? = null
+    ): Boolean {
+        val r = getRelation(type, from, to)
+
+        if (r != null) {
+            val n = getNode(id = from)
+
+            if (n != null) {
+                n.relations.remove(r)
+                relations.remove(r)
+
+                success("Relation removed")
+                return true
+            }
+        }
+
+        warning("Relation not removed")
+        return false
     }
 }
