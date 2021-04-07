@@ -1,6 +1,8 @@
 package model.enums
 
-enum class RelationType {
+import java.io.Serializable
+
+enum class RelationType : Serializable {
     ;
 
     override fun toString() = name
