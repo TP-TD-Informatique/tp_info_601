@@ -11,6 +11,7 @@ class Node(
     val attributes: HashMap<String, Any?>,
     val relations: ArrayList<Relation>
 ) : Serializable {
+    var found = false
 
     override fun toString(): String {
         var res = "($name:$type"

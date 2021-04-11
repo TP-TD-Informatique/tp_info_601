@@ -6,6 +6,7 @@ import logger.warning
 import model.enums.NodeType
 import model.enums.RelationType
 import java.io.*
+import java.util.*
 
 class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList<Relation>, private var index: Int) {
 
@@ -191,6 +192,37 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
 
         warning("Relation not removed")
         return false
+    }
+
+    fun pathBetweenTwoNodes_profondeur(nd1: Int, nd2: Int): Array<Node> {
+        var node1 = getNode(id = nd1)
+        var node2 = getNode(id = nd2)
+        val result = Stack<Node>()
+
+        nodes.forEach { it.found = false }
+
+        if (node1 != null && node2 != null) {
+            result.push(node1)
+            var currentNode = node1
+            node1.found = true
+
+            while (currentNode != node2) {
+                var nextNode = (currentNode?.relations?.firstOrNull { !it.second.found })?.second
+
+                if (nextNode != null) {
+                    nextNode.found = true
+                    result.push(nextNode)
+                    currentNode = nextNode
+                } else {
+                    result.pop()
+                    currentNode = result.peek()
+                }
+            }
+        } else {
+            error("Node ${if (node1 == null) 1 else 2} not found for profondeur")
+        }
+
+        return result as Array<Node>
     }
 
     // _.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-.
