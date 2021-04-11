@@ -1,5 +1,6 @@
 package model
 
+import logger.debug
 import logger.info
 import logger.success
 import logger.warning
@@ -194,7 +195,7 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
         return false
     }
 
-    fun pathBetweenTwoNodes_profondeur(nd1: Int, nd2: Int): Array<Node> {
+    fun pathBetweenTwoNodes(nd1: Int, nd2: Int): Array<Node> {
         val node1 = getNode(id = nd1)
         val node2 = getNode(id = nd2)
         val result = Stack<Node>()
@@ -207,6 +208,7 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
             node1.found = true
 
             while (currentNode != node2) {
+                debug("parcours profondeur -> currentNode : $currentNode")
                 val nextNode = (currentNode?.relations?.firstOrNull { !it.second.found })?.second
 
                 if (nextNode != null) {
@@ -214,16 +216,41 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
                     result.push(nextNode)
                     currentNode = nextNode
                 } else {
+                    debug("parcours profondeur -> cul-de-sac")
                     result.pop()
                     currentNode = result.peek()
                 }
             }
-        } else {
-            error("Node ${if (node1 == null) 1 else 2} not found for profondeur")
         }
 
         return result.toArray() as Array<Node>
     }
+
+    fun treeView_largeur(nd: Int, result: HashMap<Node, Node>): HashMap<Node, Node> {
+        val node = getNode(id = nd)
+
+        nodes.forEach { it.found = false }
+
+        if (node != null) {
+            val queue = LinkedList<Node>() // It's a Queue (LinkedList implements Queue)
+
+            queue.push(node)
+            node.found = true
+            while (queue.isNotEmpty()) {
+                val currentNode = queue.pop()
+
+                currentNode.relations.forEach {
+                    val n = it.second
+                    if (!n.found) {
+                        queue.push(n)
+                        n.found = true
+                        result[n] = currentNode
+                    }
+                }
+            }
+        }
+
+        return result
     }
 
     // _.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-.
