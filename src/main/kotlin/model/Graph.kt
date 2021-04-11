@@ -195,8 +195,8 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
     }
 
     fun pathBetweenTwoNodes_profondeur(nd1: Int, nd2: Int): Array<Node> {
-        var node1 = getNode(id = nd1)
-        var node2 = getNode(id = nd2)
+        val node1 = getNode(id = nd1)
+        val node2 = getNode(id = nd2)
         val result = Stack<Node>()
 
         nodes.forEach { it.found = false }
@@ -207,7 +207,7 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
             node1.found = true
 
             while (currentNode != node2) {
-                var nextNode = (currentNode?.relations?.firstOrNull { !it.second.found })?.second
+                val nextNode = (currentNode?.relations?.firstOrNull { !it.second.found })?.second
 
                 if (nextNode != null) {
                     nextNode.found = true
@@ -222,7 +222,8 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
             error("Node ${if (node1 == null) 1 else 2} not found for profondeur")
         }
 
-        return result as Array<Node>
+        return result.toArray() as Array<Node>
+    }
     }
 
     // _.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-.
