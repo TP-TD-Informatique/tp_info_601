@@ -226,7 +226,7 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
         return result.toArray() as Array<Node>
     }
 
-    fun treeView_largeur(nd: Int, result: HashMap<Node, Node>): HashMap<Node, Node> {
+    fun treeView(nd: Int, result: HashMap<Node, Node>): HashMap<Node, Node> {
         val node = getNode(id = nd)
 
         nodes.forEach { it.found = false }
