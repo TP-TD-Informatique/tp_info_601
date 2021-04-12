@@ -372,6 +372,7 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
             node.found = true
             while (queue.isNotEmpty()) {
                 val currentNode = queue.pop()
+                debug("treeView -> currentNode : ", currentNode)
 
                 currentNode.relations.forEach {
                     val n = it.second
