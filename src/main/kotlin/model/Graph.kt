@@ -8,8 +8,13 @@ import model.enums.NodeType
 import model.enums.RelationType
 import java.io.*
 import java.util.*
+import kotlin.collections.ArrayList
 
-class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList<Relation>, private var index: Int) {
+class Graph(
+    private var nodes: ArrayList<Node> = ArrayList<Node>(),
+    private var relations: ArrayList<Relation> = ArrayList<Relation>(),
+    private var index: Int = 0
+    ) {
 
     /**
      * Create a new node
