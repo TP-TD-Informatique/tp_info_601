@@ -1,5 +1,6 @@
 package interpreter
-
+import model.Graph
+import model.Graph.*
 
 
 fun interpreterError(msg : String){
@@ -39,8 +40,10 @@ fun splitLast(line: String,sep: String):String{
 }
 
 fun create(line: String) {
-    var listeNomVariable = ArrayList<String>()
-    var listeTypeVariable = ArrayList<String>()
+    var nomVariable = ""
+    var hashMap : HashMap<String,String> = HashMap<String,String>()
+    var uri = "UNSET"
+    var name = "UNSET"
 
     var reste = splitLast(line,"(")
     reste = splitFirst(reste ,")")
@@ -55,27 +58,33 @@ fun create(line: String) {
     arg = supprimeEspace(arg);
 
     while (arg.indexOf(",") != -1) {
-        listeNomVariable.add(splitFirst(arg, ":="))
+        nomVariable = splitFirst(arg, ":=")
         arg = splitLast(arg, ":=")
-        listeTypeVariable.add(splitFirst(arg, ","))
+        if (nomVariable.toUpperCase() == "NAME") {
+            name = splitFirst(arg, ",")
+        }else if(nomVariable.toUpperCase() == "URI"){
+            uri = splitFirst(arg, ",")
+        }else {
+            hashMap.put(nomVariable, splitFirst(arg, ","))
+        }
         arg = splitLast(arg, ",")
     }
-    listeNomVariable.add(splitFirst(arg, ":="))
+    nomVariable = splitFirst(arg, ":=")
     arg = splitLast(arg, ":=")
-    listeTypeVariable.add(arg)
+    if (nomVariable.toUpperCase() == "NAME") {
+        name = splitFirst(arg, ",")
+    }else if(nomVariable.toUpperCase() == "URI"){
+        uri = splitFirst(arg, ",")
+    }else {
+        hashMap.put(nomVariable, splitFirst(arg, ","))
+    }
 
-
-    println("type type : " + typeType)
-    println("listeNomVariable : " + listeNomVariable)
-    println("listeTypeVariable : " + listeTypeVariable)
+    //Graph.createNode(type = typeType,uri = uri,name = name,attributes = hashMap)
 
 
 }
 
 fun delete(line: String) {
-/*
-
-*/
 }
 
 fun select(line: String) {
