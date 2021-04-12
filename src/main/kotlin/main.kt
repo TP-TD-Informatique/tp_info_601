@@ -10,7 +10,8 @@ import javax.swing.JFrame
 fun main(args: Array<String>) {
     init()
     val graph = Graph()
-    graph.load("movies")
+    val databaseName = "movies"
+    graph.load(databaseName)
     initGraph(graph)
 
     // Vue GUI principale au lancement
@@ -28,7 +29,7 @@ fun main(args: Array<String>) {
     query("select (a:actor WHERE { a.name == wilson, a.firstname != fred, a.age > 25} a.name)")
     */
 
-    graph.save("movies")
+    graph.save(databaseName)
     exit()
 }
 
