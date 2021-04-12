@@ -2,6 +2,11 @@ package interpreter
 import model.Graph
 import model.Graph.*
 
+lateinit var GRAPH: Graph
+
+fun initGraph(graph: Graph) {
+    GRAPH = graph
+}
 
 fun interpreterError(msg : String){
     println("erreur type : ")

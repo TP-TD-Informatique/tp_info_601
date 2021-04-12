@@ -1,3 +1,4 @@
+import interpreter.initGraph
 import interpreter.query
 import logger.exit
 import logger.init
@@ -10,6 +11,7 @@ fun main(args: Array<String>) {
     init()
     val graph = Graph()
     graph.load("movies")
+    initGraph(graph)
 
     // Vue GUI principale au lancement
     val homeView: JFrame = MainView("Knowledge Graph")
