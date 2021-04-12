@@ -1,6 +1,7 @@
 package interpreter
 
 
+
 fun interpreterError(msg : String){
     println("erreur type : ")
     println(msg)
@@ -38,12 +39,12 @@ fun splitLast(line: String,sep: String):String{
 }
 
 fun create(line: String) {
+    var listeNomVariable = ArrayList<String>()
+    var listeTypeVariable = ArrayList<String>()
+
     var reste = splitLast(line,"(")
     reste = splitFirst(reste ,")")
 
-
-    var nomType = splitFirst(reste,":")
-    reste = splitLast(reste,":")
 
     var typeType = splitFirst(reste,"{")
     reste = splitLast(reste,"{")
@@ -51,10 +52,23 @@ fun create(line: String) {
     var arg = splitFirst(reste,"}")
     reste = splitLast(reste,"}")
 
-    println("nom type : " + nomType)
+    arg = supprimeEspace(arg);
+
+    while (arg.indexOf(",") != -1) {
+        listeNomVariable.add(splitFirst(arg, ":="))
+        arg = splitLast(arg, ":=")
+        listeTypeVariable.add(splitFirst(arg, ","))
+        arg = splitLast(arg, ",")
+    }
+    listeNomVariable.add(splitFirst(arg, ":="))
+    arg = splitLast(arg, ":=")
+    listeTypeVariable.add(arg)
+
+
     println("type type : " + typeType)
-    println("arg : " + arg)
-    println("reste : " + reste)
+    println("listeNomVariable : " + listeNomVariable)
+    println("listeTypeVariable : " + listeTypeVariable)
+
 
 }
 
@@ -65,31 +79,78 @@ fun delete(line: String) {
 }
 
 fun select(line: String) {
-    var reste = splitLast(line,"(")
-    reste = splitFirst(reste ,")")
+    var listeVariable = ArrayList<String>()
+    var listeTypeVariable = ArrayList<String>()
+    var reste = splitLast(line, "(")
+    reste = splitFirst(reste, ")")
 
-    var nomType = splitFirst(reste,":")
-    reste = splitLast(reste,":")
+    if (reste.indexOf("{") != -1) {
+        var phrase = splitFirst(reste, "{")
+        reste = splitLast(reste, "{")
 
-    var nomVariable = splitFirst(reste," ")
-    reste = splitLast(reste," ")
 
-    var testWhere = splitFirst(reste," ")
-    reste = splitLast(reste," ")
+        while (phrase.indexOf(",") != -1) {
+            listeVariable.add(splitFirst(phrase, ":"))
+            phrase = splitLast(phrase, ":")
+            listeTypeVariable.add(splitFirst(phrase, ","))
+            phrase = splitLast(phrase, ",")
+        }
+        listeVariable.add(splitFirst(phrase, ":"))
+        phrase = splitLast(phrase, ":")
+        listeTypeVariable.add(splitFirst(phrase, " "))
+        phrase = splitLast(phrase, " ")
 
-    // estWhere variable de test à supprimer
-    var estWhere = false
-    if (testWhere.toUpperCase() == "WHERE") {
-        estWhere = true
+        println(listeTypeVariable)
+        println(listeVariable)
+        println("phrase : " + phrase)
+        println("reste : " + reste)
 
-        var typeType = splitFirst(reste,"{")
-        reste = splitLast(reste,"{")
+        if (phrase.toUpperCase() == "WHERE") {
+            while (phrase.indexOf(",") != -1) {
+
+            }
+        }
+
 
     }
 
-    println("select test nomType : " + nomType)
-    println("select test nomVariable : " + nomVariable)
-    println("select test testWhere : " + testWhere)
-    println("select test estWhere : " + estWhere)
 
+
+//    var nomType = splitFirst(reste,":")
+//    reste = splitLast(reste,":")
+//
+//    var nomVariable = splitFirst(reste," ")
+//    reste = splitLast(reste," ")
+//
+//    var testWhere = splitFirst(reste," ")
+//    reste = splitLast(reste," ")
+//
+//    // estWhere variable de test à supprimer
+//    var estWhere = false
+//    if (testWhere.toUpperCase() == "WHERE") {
+//        estWhere = true
+//
+//        var typeType = splitFirst(reste,"{")
+//        reste = splitLast(reste,"{")
+//
+//
+//    }
+
+//    println("select test nomType : " + nomType)
+//    println("select test nomVariable : " + nomVariable)
+//    println("select test testWhere : " + testWhere)
+//    println("select test estWhere : " + estWhere)
+    //println("select test reste : " + reste)
+
+
+}
+fun supprimeEspace(line : String): String {
+    var res = ""
+    var listeChar = line.toCharArray();
+    for (item in listeChar){
+        if (item != ' '){
+            res += item
+        }
+    }
+    return res
 }
