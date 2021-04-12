@@ -1,8 +1,10 @@
 package interpreter
 import model.Graph
 import model.Graph.*
+import model.Node
+import model.enums.NodeType
 
-lateinit var GRAPH: Graph
+private lateinit var GRAPH: Graph
 
 fun initGraph(graph: Graph) {
     GRAPH = graph
@@ -46,7 +48,7 @@ fun splitLast(line: String,sep: String):String{
 
 fun create(line: String) {
     var nomVariable = ""
-    var hashMap : HashMap<String,String> = HashMap<String,String>()
+    var hashMap  = HashMap<String,Any?>()
     var uri = "UNSET"
     var name = "UNSET"
 
@@ -83,16 +85,14 @@ fun create(line: String) {
     }else {
         hashMap.put(nomVariable, splitFirst(arg, ","))
     }
-
-    //Graph.createNode(type = typeType,uri = uri,name = name,attributes = hashMap)
-
+    GRAPH.createNode(type = NodeType.valueOf(typeType),uri = uri,name = name,attributes = hashMap)
 
 }
 
 fun delete(line: String) {
 }
 
-fun select(line: String) {
+fun select(line: String):ArrayList<Node> {
     var listeVariable = ArrayList<String>()
     var listeTypeVariable = ArrayList<String>()
     var reste = splitLast(line, "(")
@@ -121,7 +121,7 @@ fun select(line: String) {
 
         if (phrase.toUpperCase() == "WHERE") {
             while (phrase.indexOf(",") != -1) {
-
+                
             }
         }
 
