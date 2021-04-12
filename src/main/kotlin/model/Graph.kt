@@ -11,6 +11,33 @@ import java.util.*
 
 class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList<Relation>, private var index: Int) {
 
+    /**
+     * Create a new node
+     *
+     * Required params :
+     * - type
+     * - attributes
+     *
+     * Optional params :
+     * - name
+     * - uri
+     *
+     * Example :
+     * ```
+     * val attr = HashMap<String, Any?>()
+     * attr["firstname"] = "John"
+     * attr["lastname"] = "Doe"
+     *
+     * var myNode = createNode("Actor", "https://www.a_website.com", NodeType.valueOf("Person"), attr)
+     * ```
+     *
+     * @param name The name of the node
+     * @param uri A link to a website for more information
+     * @param type The type of the node, you can use `NodeType.valueOf(String)`
+     * @param attributes The attributes of the node, it's just a simple String => Any? association array
+     *
+     * @return The created Node
+     */
     fun createNode(name: String?, uri: String?, type: NodeType, attributes: HashMap<String, Any?>): Node {
         val n = Node(index++, name, uri, type, attributes, ArrayList())
         info("Create node ", n)
@@ -20,6 +47,17 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
         return n
     }
 
+    /**
+     * Same as previous function but with one difference : attributes are passed via a variadic
+     * @see createNode
+     *
+     * @param name String?
+     * @param uri String?
+     * @param type NodeType
+     * @param attributes vararg Pair<String, Any?>
+     *
+     * @return The created Node
+     */
     fun createNode(name: String?, uri: String?, type: NodeType, vararg attributes: Pair<String, Any?>): Node {
         val attr = HashMap<String, Any?>()
         for (attribute in attributes) {
@@ -29,6 +67,20 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
         return createNode(name, uri, type, attr)
     }
 
+    /**
+     * Return a node depending on it's name, uri, type, id and attributes
+     * If one of this parameters is null, it is not used for the search
+     * You can get the nth node with the offset parameter
+     *
+     * @param name String?
+     * @param uri String?
+     * @param type NodeType?
+     * @param attributes HashMap<String, Any?>?
+     * @param id Int?
+     * @param offset Int = 0
+     *
+     * @return A Node or null
+     */
     fun getNode(
         name: String? = null,
         uri: String? = null,
@@ -73,6 +125,21 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
         return null
     }
 
+    /**
+     * Same as getNode, but returns an array of node.
+     * You can get the nth node with offset and limit the number of result with limit
+     * @see getNode
+     *
+     * @param name String?
+     * @param uri String?
+     * @param type NodeType?
+     * @param attributes HashMap<String, Any?>?
+     * @param id Int?
+     * @param offset Int = 0
+     * @param limit Int = 25
+     *
+     * @return An ArrayList of Node
+     */
     fun getNodes(
         name: String? = null,
         uri: String? = null,
@@ -92,6 +159,18 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
         return res
     }
 
+    /**
+     * Get the node with id, and update the values.
+     * You can update name, uri and attributes.
+     * If one of this parameter is null, the value is not updated
+     *
+     * @param name String?
+     * @param uri String?
+     * @param attributes HashMap<String, Any?>?
+     * @param id Int
+     *
+     * @return If the node is updated
+     */
     fun updateNode(
         name: String? = null,
         uri: String? = null,
@@ -114,6 +193,13 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
         return false
     }
 
+    /**
+     * Get the node with id, and delete it and his relations
+     *
+     * @param id Int
+     *
+     * @return If the node is deleted
+     */
     fun deleteNode(id: Int): Boolean {
         val n = getNode(id = id)
 
@@ -133,6 +219,15 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
         return false
     }
 
+    /**
+     * Create a relation between node from and node to
+     *
+     * @param from Node
+     * @param to Node
+     * @param type RelationType - The type of the relation
+     *
+     * @return The created Relation
+     */
     fun createRelation(from: Node, to: Node, type: RelationType): Relation {
         val r = Relation(type, from, to)
         info("Create relation ", r)
@@ -143,6 +238,18 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
         return r
     }
 
+    /**
+     * Return a Relation depending on his type, and the two nodes id
+     * If one of the parameters is null, is not used for search
+     * You can get the nth relation with offset
+     *
+     * @param type RelationType?
+     * @param from Int?
+     * @param to Int?
+     * @param offset Int = 0
+     *
+     * @return A Relation or null
+     */
     fun getRelation(
         type: RelationType? = null,
         from: Int? = null,
@@ -172,6 +279,15 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
         return null
     }
 
+    /**
+     * Get a Relation depending on two nodes and the type id and delete it
+     *
+     * @param from Int
+     * @param to Int
+     * @param type RelationType?
+     *
+     * @return If the relation is deleted
+     */
     fun deleteRelation(
         from: Int,
         to: Int,
@@ -195,6 +311,15 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
         return false
     }
 
+    /**
+     * Search a path composed of Node and Relation between nd1 and nd2
+     * It use a depth process
+     *
+     * @param nd1 Int - Node1 id
+     * @param nd2 Int - Node2 id
+     *
+     * @return The list of Node between nd1 and nd2
+     */
     fun pathBetweenTwoNodes(nd1: Int, nd2: Int): Array<Node> {
         val node1 = getNode(id = nd1)
         val node2 = getNode(id = nd2)
@@ -208,7 +333,7 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
             node1.found = true
 
             while (currentNode != node2) {
-                debug("parcours profondeur -> currentNode : $currentNode")
+                debug("pathBetweenTwoNodes -> currentNode : $currentNode")
                 val nextNode = (currentNode?.relations?.firstOrNull { !it.second.found })?.second
 
                 if (nextNode != null) {
@@ -216,7 +341,7 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
                     result.push(nextNode)
                     currentNode = nextNode
                 } else {
-                    debug("parcours profondeur -> cul-de-sac")
+                    debug("pathBetweenTwoNodes -> cul-de-sac")
                     result.pop()
                     currentNode = result.peek()
                 }
@@ -226,6 +351,15 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
         return result.toArray() as Array<Node>
     }
 
+    /**
+     * Return a tree of Node with nd as root
+     * The result is a HashMap, each nodes is associated to its parent
+     *
+     * @param nd Int - Node id
+     * @param result HashMap<Node, Node>
+     *
+     * @return HashMap<Node, Node>
+     */
     fun treeView(nd: Int, result: HashMap<Node, Node>): HashMap<Node, Node> {
         val node = getNode(id = nd)
 
@@ -255,6 +389,11 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
 
     // _.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-._.-.
 
+    /**
+     * Save the database
+     *
+     * @param databaseName String
+     */
     fun save(databaseName: String) {
         if (File("./databases").mkdir()) {
             warning("Dir 'databases' created")
@@ -301,6 +440,11 @@ class Graph(private var nodes: ArrayList<Node>, private var relations: ArrayList
         }
     }
 
+    /**
+     * Load the database
+     *
+     * @param databaseName String
+     */
     fun load(databaseName: String) {
         loadNodes(databaseName)
         loadRelations(databaseName)
