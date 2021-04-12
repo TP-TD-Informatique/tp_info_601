@@ -4,7 +4,6 @@ import logger.exit
 import logger.init
 import model.Graph
 import view.MainView
-import javax.swing.JFrame
 
 
 fun main(args: Array<String>) {
@@ -15,7 +14,7 @@ fun main(args: Array<String>) {
     initGraph(graph)
 
     // Vue GUI principale au lancement
-    val homeView: JFrame = MainView("Knowledge Graph")
+    val homeView = MainView("Knowledge Graph")
     homeView.isVisible = true
 
     query("create (actor {name  :=   wilson ,  firstname:=peter  ,  age:=18   })")

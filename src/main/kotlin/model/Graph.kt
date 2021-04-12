@@ -8,13 +8,12 @@ import model.enums.NodeType
 import model.enums.RelationType
 import java.io.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class Graph(
     private var nodes: ArrayList<Node> = ArrayList<Node>(),
     private var relations: ArrayList<Relation> = ArrayList<Relation>(),
     private var index: Int = 0
-    ) {
+) {
 
     /**
      * Create a new node
@@ -438,7 +437,7 @@ class Graph(
         info("Save index")
         try {
             val dos = DataOutputStream(FileOutputStream("./databases/$databaseName.index"))
-            dos.write(index)
+            dos.writeInt(index)
             dos.close()
             success("Index saved !")
         } catch (e: IOException) {
