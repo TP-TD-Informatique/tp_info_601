@@ -63,7 +63,8 @@ public class MyNodesPanel extends JPanel {
         JTextField label = new JTextField("nomRelation");
         int labelXpos = (node2.getCoords().getX() + node1.getCoords().getX()) / 2;
         int labelYpos = (node2.getCoords().getY() + node1.getCoords().getY()) / 2;
-        label.setBackground(Color.LIGHT_GRAY);
+        label.setBackground(null);
+        label.setBorder(null);
         label.setBounds(labelXpos, labelYpos, label.getPreferredSize().width, label.getPreferredSize().height);
 
         // La ligne
