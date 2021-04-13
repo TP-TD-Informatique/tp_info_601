@@ -57,6 +57,9 @@ public class MyNodesPanel extends JPanel {
     }
 
     private void drawLine(Coordonnees coordA, Coordonnees coordB, Graphics2D g2) {
+        JTextArea label = new JTextArea("nomRelation");
+        label.setBounds(coordB.getX()-coordA.getX(), coordB.getY()-coordA.getY(), label.getPreferredSize().width, label.getPreferredSize().height);
+        this.add(label);
         g2.setStroke(new BasicStroke(2));
         g2.drawLine(coordA.getX(),coordA.getY(),
                 coordB.getX(),coordB.getY());
