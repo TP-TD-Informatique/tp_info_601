@@ -15,10 +15,10 @@ class MainWindow : JFrame("Knowledge graph") {
     var nodes = ArrayList<Node>()
 
     init {
+        minimumSize = Dimension(600, 600)
         val dim = Toolkit.getDefaultToolkit().screenSize
         setLocation(dim.width / 2 - width / 2, dim.height / 2 - height / 2)
         defaultCloseOperation = WindowConstants.DISPOSE_ON_CLOSE
-        minimumSize = Dimension(600, 600)
 
         drawContent()
 
@@ -42,7 +42,7 @@ class MainWindow : JFrame("Knowledge graph") {
         )
         topPanel.add(input, BorderLayout.CENTER)
 
-        queryButton = JButton("Query !")
+        queryButton = JButton("Run !")
         queryButton.border = CompoundBorder(
             MatteBorder(10, 10, 10, 10, Color.LIGHT_GRAY),
             CompoundBorder(MatteBorder(2, 2, 2, 2, Color.BLACK), EmptyBorder(4, 4, 4, 4))
@@ -50,7 +50,8 @@ class MainWindow : JFrame("Knowledge graph") {
         queryButton.background = Color.WHITE
         queryButton.cursor = Cursor(Cursor.HAND_CURSOR)
         queryButton.addActionListener {
-            nodes = query(input.text)
+            nodes.clear()
+            nodes.addAll(query(input.text))
             canvas.repaint()
         }
         topPanel.add(queryButton, BorderLayout.EAST)
