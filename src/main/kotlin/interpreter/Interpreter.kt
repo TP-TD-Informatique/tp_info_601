@@ -92,7 +92,11 @@ fun create(line: String) {
 fun delete(line: String) {
 }
 
-fun select(line: String):ArrayList<Node> {
+fun select(line: String)/*:ArrayList<Node>*/ {
+    var nomVariable = ""
+    var hashMapList = ArrayList<HashMap<String,Any?>>()
+    var uri = "UNSET"
+    var name = "UNSET"
     var listeVariable = ArrayList<String>()
     var listeTypeVariable = ArrayList<String>()
     var reste = splitLast(line, "(")
@@ -120,8 +124,12 @@ fun select(line: String):ArrayList<Node> {
         println("reste : " + reste)
 
         if (phrase.toUpperCase() == "WHERE") {
-            while (phrase.indexOf(",") != -1) {
-                
+            while (reste.indexOf(",") != -1) {
+                var place = listeVariable.indexOf(splitFirst(reste,"."))
+                if (place == -1){
+                    error("erreur la variable " + splitFirst(reste,".") + " n'est pas spécifiée")
+                }
+
             }
         }
 
