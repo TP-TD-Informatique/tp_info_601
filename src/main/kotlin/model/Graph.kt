@@ -164,6 +164,19 @@ class Graph(
     }
 
     /**
+     * Return the last created node
+     * Or null if there is 0 node
+     *
+     * @return Node?
+     */
+    fun getLastNode() = (
+            if (index > 0)
+                nodes[index - 1]
+            else
+                null
+            )
+
+    /**
      * Get the node with id, and update the values.
      * You can update name, uri and attributes.
      * If one of this parameter is null, the value is not updated
