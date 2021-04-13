@@ -16,19 +16,20 @@ fun interpreterError(msg: String) {
     println(msg)
 }
 
-fun query(line: String) {
+fun query(line: String):ArrayList<Node> {
     var firstWord = splitFirst(line, " ")
     var restLine = splitLast(line, " ")
     firstWord = firstWord.toUpperCase()
     println(" action : " + firstWord)
 
     if (firstWord == "CREATE") {
-        create(restLine)
+        return create(restLine)
     } else if (firstWord == "SELECT") {
-        select(restLine)
+        return select(restLine)
     } else  {
         interpreterError("error")
     }
+    return ArrayList<Node>()
 }
 
 fun splitFirst(line: String, sep: String): String {
@@ -48,7 +49,8 @@ fun splitLast(line: String, sep: String): String {
     }
 }
 
-fun create(line: String) {
+fun create(line: String):ArrayList<Node> {
+    var listeRes = ArrayList<Node>()
     var nomVariable = ""
     var hashMap = HashMap<String, Any?>()
     var uri = "UNSET"
@@ -94,7 +96,8 @@ fun create(line: String) {
         } else {
             hashMap.put(nomVariable, splitFirst(arg, ","))
         }
-        GRAPH.createNode(type = NodeType.valueOf(typeType.toUpperCase()), uri = (if (uri == "UNSET") null else uri), name = (if (name == "UNSET") null else name), attributes = hashMap)
+        listeRes.add(GRAPH.createNode(type = NodeType.valueOf(typeType.toUpperCase()), uri = (if (uri == "UNSET") null else uri), name = (if (name == "UNSET") null else name), attributes = hashMap))
+        return listeRes
     } else {
         var nomRelation = splitFirst(reste, ":")
         reste = splitLast(reste, ":")
