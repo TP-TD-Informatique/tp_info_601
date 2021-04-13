@@ -111,6 +111,7 @@ fun create(line: String):ArrayList<Node> {
         reste = splitLast(reste, ":")
         var noeud2 = reste
     }
+    return ArrayList()
 }
 
 fun delete(listNode:ArrayList<Node>) {
