@@ -97,6 +97,7 @@ fun create(line: String):ArrayList<Node> {
         } else {
             hashMap.put(nomVariable, splitFirst(arg, ","))
         }
+        typeType = supprimeEspace(typeType)
         listeRes.add(GRAPH.createNode(type = NodeType.valueOf(typeType.toUpperCase()), uri = (if (uri == "UNSET") null else uri), name = (if (name == "UNSET") null else name), attributes = hashMap))
         return listeRes
     } else {
