@@ -1,10 +1,8 @@
 package view
 
 import model.Node
-import java.awt.Canvas
-import java.awt.Color
-import java.awt.Graphics
-import java.awt.Graphics2D
+import java.awt.*
+import javax.swing.JTextField
 import kotlin.math.sqrt
 import kotlin.math.truncate
 
@@ -45,6 +43,12 @@ class MainCanvas(private val nodes: ArrayList<Node>) : Canvas() {
             // Paint relations
             g2.color = Color.BLACK
             // TODO : g2.drawLine(x1, y1, x2, y2)
+            for (node in myNodes) {
+                node.node.relations.forEach { relation ->
+                    //g2.drawLine(node.coord.x, node.node.relations[j].second.relations[], "PLAYED_IN", g2)
+                    g2.drawLine(node.coord.x, node.coord.y, relation.second.id, relation.second.id)
+                }
+            }
 
             // Paint nodes
             for (node in myNodes) {
@@ -56,5 +60,27 @@ class MainCanvas(private val nodes: ArrayList<Node>) : Canvas() {
                     g2.drawString(node.node.name, node.coord.x, node.coord.y)
             }
         }
+    }
+
+    // La fonction drawLine modifiée faite en Java avec Damien
+    private fun drawLien(node1: MyNode, node2: Node, nomRelation: String, g2: Graphics2D) {
+        // Le label qui indique le nom de la liaison
+        val label = JTextField(nomRelation)
+        val labelXpos = (node2. + node1.coords.x) / 2
+        val labelYpos = (node2.coords.y + node1.coords.y) / 2
+        label.background = null
+        label.border = null
+        label.setBounds(labelXpos, labelYpos, label.preferredSize.width, label.preferredSize.height)
+
+        // La ligne
+        g2.stroke = BasicStroke(2F)
+        g2.drawLine(
+            node1.coords.x + node1.dimensions.width / 2,
+            node1.coords.y + node1.dimensions.height / 2,
+            node2.coords.x,
+            node2.coords.y
+        )
+        // je sé pas commen ajouter
+        // add(label)
     }
 }
