@@ -18,7 +18,7 @@ public class MyNode extends JTextArea {
         return relations;
     }
 
-    public void setRelations(MyNode node) {
+    public void addRelation(MyNode node) {
         relations.add(node);
     }
 

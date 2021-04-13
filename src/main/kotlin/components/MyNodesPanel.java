@@ -24,23 +24,28 @@ public class MyNodesPanel extends JPanel {
         Coordonnees coordsNode1 = new Coordonnees(10, 10);
         Coordonnees coordsNode2 = new Coordonnees(200, 200);
         // MyNode = JTextarea
-        MyNode node1 = new MyNode("ACTEUR :\nTom Cruise\n1967", coordsNode1);
+        MyNode node1 = new MyNode("ACTEUR :\nTom Cruise\n1967", new Coordonnees(10, 10));
         // MyRelation = JLabel
-        MyRelation rel1 = new MyRelation("PLAYED_IN");
-        // useless :
-        // rel1.setBorder(relationBorder);
-        MyNode node2 = new MyNode("FILM :\nTop Gun\n1982", coordsNode2);
+        MyNode node2 = new MyNode("FILM :\nTop Gun\n1982", new Coordonnees(200, 200));
+        MyNode node3 = new MyNode("FILM :\nMy neighbour\n1987", new Coordonnees(200, 400));
 
         nodes.add(node1);
         nodes.add(node2);
+        nodes.add(node3);
 
-        node1.setRelations(node2);
-        //node1.setLocation(node1.getCoords().getX(), node1.getCoords().getY());
-        //node2.setLocation(node2.getCoords().getX(), node2.getCoords().getY());
-        node1.setBounds(node1.getCoords().getX(), node1.getCoords().getY(), node1.getDimensions().width, node1.getDimensions().height);
-        node2.setBounds(node2.getCoords().getX(), node2.getCoords().getY(), node2.getDimensions().width, node2.getDimensions().height);
-        this.add(node1);
-        this.add(node2);
+        node1.addRelation(node2);
+        node1.addRelation(node3);
+
+        // Ajout de tous les nodes sur le canvas
+        for (int i = 0; i < nodes.size(); i++) {
+            // Hitbox
+            nodes.get(i).setBounds(nodes.get(i).getCoords().getX(),
+                    nodes.get(i).getCoords().getY(),
+                    nodes.get(i).getDimensions().width,
+                    nodes.get(i).getDimensions().height);
+            // Ajout
+            this.add(nodes.get(i));
+        }
     }
 
     @Override
@@ -53,14 +58,14 @@ public class MyNodesPanel extends JPanel {
             ArrayList<MyNode> relations = new ArrayList<MyNode>();
             relations = actualNode.getRelations();
             for (int j = 0; j < relations.size(); ++j) {
-                drawLine(actualNode, relations.get(j), g2);
+                drawLine(actualNode, relations.get(j), "nom Relation", g2);
             }
         }
     }
 
-    private void drawLine(MyNode node1, MyNode node2, Graphics2D g2) {
+    private void drawLine(MyNode node1, MyNode node2, String nomRelation, Graphics2D g2) {
         // Le label qui indique le nom de la liaison
-        JTextField label = new JTextField("nomRelation");
+        JTextField label = new JTextField(nomRelation);
         int labelXpos = (node2.getCoords().getX() + node1.getCoords().getX()) / 2;
         int labelYpos = (node2.getCoords().getY() + node1.getCoords().getY()) / 2;
         label.setBackground(null);
