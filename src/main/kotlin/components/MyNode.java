@@ -3,22 +3,17 @@ package components;
 import javax.swing.*;
 import java.awt.*;
 
-public class MyNode extends JComponent {
-    private String name;
-    private String surname;
-
-    public MyNode(String name, String surname) {
-        this.name = name;
-        this.surname = surname;
-        this.setSize(50, 50);
-        this.setBackground(Color.BLUE);
+public class MyNode extends JTextArea {
+    public MyNode(String text) {
+        super(text);
     }
 
+    /*
+    Cette fonction ne fonctionne pas
     @Override
     public void paint(Graphics g) {
-        super.paint(g);
-
-        g.setColor(Color.GREEN);
-        g.fillRect(0, 0, 50, 50);
-    }
+        Graphics2D graphic2d = (Graphics2D) g;
+        graphic2d.setColor(Color.blue);
+        graphic2d.fillRect(30, 30, 100, 100);
+    }*/
 }
