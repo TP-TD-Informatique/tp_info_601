@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class MyNode extends JTextArea {
     private Coordonnees coords;
     private ArrayList<MyNode> relations;
+    private String type;
 
     public MyNode(String text, Coordonnees coords) {
         super(text);

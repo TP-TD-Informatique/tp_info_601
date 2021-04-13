@@ -21,20 +21,21 @@ public class MyNodesPanel extends JPanel {
         // Border relationBorder = BorderFactory.createMatteBorder(0, 0, 10, 0, Color.BLACK);
         // TitledBorder nodeTitleBorder = BorderFactory.createTitledBorder("Noeud");
 
-        Coordonnees coordsNode1 = new Coordonnees(10, 10);
-        Coordonnees coordsNode2 = new Coordonnees(200, 200);
         // MyNode = JTextarea
-        MyNode node1 = new MyNode("ACTEUR :\nTom Cruise\n1967", new Coordonnees(10, 10));
+        MyNode node1 = new MyNode("ACTEUR\nNom : Tom Cruise\nNaissance : 1967", new Coordonnees(10, 10));
         // MyRelation = JLabel
-        MyNode node2 = new MyNode("FILM :\nTop Gun\n1982", new Coordonnees(200, 200));
-        MyNode node3 = new MyNode("FILM :\nMy neighbour\n1987", new Coordonnees(200, 400));
+        MyNode node2 = new MyNode("FILM\nTop Gun\n1986", new Coordonnees(200, 20));
+        MyNode node3 = new MyNode("FILM\nMission Impossible\n1996", new Coordonnees(200, 120));
+        MyNode node4 = new MyNode("FILM\nLa Momie\n2017", new Coordonnees(300, 300));
 
         nodes.add(node1);
         nodes.add(node2);
         nodes.add(node3);
+        nodes.add(node4);
 
         node1.addRelation(node2);
         node1.addRelation(node3);
+        node1.addRelation(node4);
 
         // Ajout de tous les nodes sur le canvas
         for (int i = 0; i < nodes.size(); i++) {
@@ -58,7 +59,7 @@ public class MyNodesPanel extends JPanel {
             ArrayList<MyNode> relations = new ArrayList<MyNode>();
             relations = actualNode.getRelations();
             for (int j = 0; j < relations.size(); ++j) {
-                drawLine(actualNode, relations.get(j), "nom Relation", g2);
+                drawLine(actualNode, relations.get(j), "PLAYED_IN", g2);
             }
         }
     }
