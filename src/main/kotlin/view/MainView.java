@@ -4,6 +4,8 @@ import components.MyRelation;
 import components.MyNode;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,9 +21,9 @@ public class MainView extends JFrame {
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setContentPane(mainPanel);
-        this.setMinimumSize(new Dimension(400,400));
+        this.setMinimumSize(new Dimension(400, 400));
 
-        this.setSize(600,600);
+        this.setSize(600, 600);
         createUIComponents();
 
         // Event listener du bouton en haut à droite "envoyer"
@@ -35,8 +37,12 @@ public class MainView extends JFrame {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
+        Border relationBorder = BorderFactory.createMatteBorder(0, 0, 10, 0, Color.BLACK);
+        TitledBorder nodeTitleBorder = BorderFactory.createTitledBorder("Noeud");
+
         MyNode node1 = new MyNode("Tom Cruise");
         MyRelation rel1 = new MyRelation("PLAYED_IN");
+        rel1.setBorder(relationBorder);
         MyNode node2 = new MyNode("Top Gun\n1982");
 
         // Askip il faut utiliser la méthode paintComponent() de JPanel

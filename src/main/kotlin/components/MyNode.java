@@ -9,7 +9,6 @@ public class MyNode extends JTextArea {
     }
 
     /*
-    Cette fonction ne fonctionne pas
     @Override
     public void paint(Graphics g) {
         Graphics2D graphic2d = (Graphics2D) g;
