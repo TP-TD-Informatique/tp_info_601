@@ -1,9 +1,8 @@
 import interpreter.initGraph
-import interpreter.query
 import logger.exit
 import logger.init
 import model.Graph
-import view.MainView
+import view.MainWindow
 
 
 fun main(args: Array<String>) {
@@ -14,8 +13,9 @@ fun main(args: Array<String>) {
     initGraph(graph)
 
     // Vue GUI principale au lancement
-    val homeView = MainView("Knowledge Graph")
-    homeView.isVisible = true
+    MainWindow()
+    //val homeView = MainView("Knowledge Graph")
+    //homeView.isVisible = true
 
     //query("create (actor {name  :=   wilson ,  firstname:=peter  ,  age:=18   })")
     //query("create (r:relation,a:actor,b:actor )")
@@ -23,7 +23,7 @@ fun main(args: Array<String>) {
     //select (a:actor WHERE { a.name == wilson} a.name)
     //select (a:actor,b:actor WHERE { a.name == wilson} a.name)
     //select (a:actor WHERE { a.name == wilson, a.firstname != fred, a.age > 25} a.name)
-    query("select (a:actor,b:movie WHERE { a.name == wilson,b.name == l'aventure c'est l'aventure,a.id == 788, b.id ==965} delete )")
+    //query("select (a:actor,b:movie WHERE { a.name == wilson,b.name == l'aventure c'est l'aventure,a.id == 788, b.id ==965} delete )")
     /*query("select (a:actor WHERE { a.name == wilson} a.node)")
     query("select (a:actor WHERE { a.name == wilson} a.name)")
     query("select (a:actor WHERE { a.name == wilson, a.firstname != fred, a.age > 25} a.name)")
