@@ -63,7 +63,7 @@ class MainCanvas(private val nodes: ArrayList<Node>) : Canvas() {
     }
 
     // La fonction drawLine modifiée faite en Java avec Damien
-    private fun drawLien(node1: MyNode, node2: Node, nomRelation: String, g2: Graphics2D) {
+    /*private fun drawLien(node1: MyNode, node2: Node, nomRelation: String, g2: Graphics2D) {
         // Le label qui indique le nom de la liaison
         val label = JTextField(nomRelation)
         val labelXpos = (node2. + node1.coords.x) / 2
@@ -82,5 +82,5 @@ class MainCanvas(private val nodes: ArrayList<Node>) : Canvas() {
         )
         // je sé pas commen ajouter
         // add(label)
-    }
+    }*/
 }
