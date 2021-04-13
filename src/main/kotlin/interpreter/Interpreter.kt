@@ -4,6 +4,7 @@ import model.Graph
 import model.Graph.*
 import model.Node
 import model.enums.NodeType
+import model.enums.RelationType
 
 private lateinit var GRAPH: Graph
 
@@ -99,17 +100,17 @@ fun create(line: String):ArrayList<Node> {
         listeRes.add(GRAPH.createNode(type = NodeType.valueOf(typeType.toUpperCase()), uri = (if (uri == "UNSET") null else uri), name = (if (name == "UNSET") null else name), attributes = hashMap))
         return listeRes
     } else {
-        var nomRelation = splitFirst(reste, ":")
-        reste = splitLast(reste, ":")
         var typeRelation = splitFirst(reste, ",")
         reste = splitLast(reste, ",")
-        var nomLien1 = splitFirst(reste, ":")
-        reste = splitLast(reste, ":")
-        var noeud1 = splitFirst(reste, ",")
+        var nomNoeud1 = splitFirst(reste, ",")
         reste = splitLast(reste, ",")
-        var nomLien2 = splitFirst(reste, ":")
-        reste = splitLast(reste, ":")
-        var noeud2 = reste
+        var nomNoeud2 = reste
+
+        var noeud1 = GRAPH.getNode(name = nomNoeud1)
+        var noeud2 = GRAPH.getNode(name = nomNoeud2)
+        if((noeud1 != null)&&(noeud2 != null)){
+            GRAPH.createRelation(noeud1, noeud2, RelationType.valueOf(typeRelation))
+        }
     }
     return ArrayList()
 }
