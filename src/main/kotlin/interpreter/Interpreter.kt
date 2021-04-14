@@ -1,5 +1,7 @@
 package interpreter
 
+import logger.info
+import logger.error
 import model.Graph
 import model.Node
 import model.enums.NodeType
@@ -20,7 +22,7 @@ fun query(line: String): ArrayList<Node> {
     var firstWord = splitFirst(line, " ")
     var restLine = splitLast(line, " ")
     firstWord = firstWord.toUpperCase()
-    println(" action : " + firstWord)
+    info(" action :", firstWord)
 
     if (firstWord == "CREATE") {
         return create(restLine)
@@ -157,10 +159,10 @@ fun select(line: String): ArrayList<Node> {
         listeTypeVariable.add(splitFirst(phrase, " "))
         phrase = splitLast(phrase, " ")
 
-        println(listeTypeVariable)
-        println(listeVariable)
-        println("phrase1 : " + phrase)
-        println("reste1 : " + reste)
+        info(listeTypeVariable)
+        info(listeVariable)
+        info("phrase1 :", phrase)
+        info("reste1 :", reste)
 
         for (int in listeVariable) {
             hashMapList.add(HashMap<String, Any?>())
@@ -175,7 +177,7 @@ fun select(line: String): ArrayList<Node> {
                 phrase = supprimeEspace(splitFirst(reste, "."))
                 place = listeVariable.indexOf(phrase)
                 if (place == -1) {
-                    error("erreur la variable " + splitFirst(reste, ".") + " n'est pas spécifiée")
+                    error("erreur la variable ", splitFirst(reste, "."), "n'est pas spécifiée")
                 } else {
                     reste = splitLast(reste, ".")
                     phrase = splitFirst(reste, "==")
@@ -184,7 +186,7 @@ fun select(line: String): ArrayList<Node> {
                     reste = splitLast(reste, "==")
                     phrase = splitFirst(reste, ",")
                     phrase = supprimeEspace(phrase)
-                    hashMapList.get(place).put(nomVariable, phrase)
+                    hashMapList[place][nomVariable] = phrase
                     reste = splitLast(reste, ",")
                 }
 
@@ -192,7 +194,7 @@ fun select(line: String): ArrayList<Node> {
             phrase = supprimeEspace(splitFirst(reste, "."))
             place = listeVariable.indexOf(phrase)
             if (place == -1) {
-                error("erreur la variable " + splitFirst(reste, ".") + " n'est pas spécifiée")
+                error("erreur la variable", splitFirst(reste, "."), "n'est pas spécifiée")
             } else {
                 reste = splitLast(reste, ".")
                 phrase = splitFirst(reste, "==")
@@ -201,7 +203,7 @@ fun select(line: String): ArrayList<Node> {
                 reste = splitLast(reste, "==")
                 phrase = splitFirst(reste, "}")
                 phrase = supprimeEspace(phrase)
-                hashMapList.get(place).put(nomVariable, phrase)
+                hashMapList[place][nomVariable] = phrase
                 reste = splitLast(reste, "}")
                 println(hashMapList)
             }
@@ -224,8 +226,8 @@ fun select(line: String): ArrayList<Node> {
                 val uri = listeUri[i]
                 val id = listeId[i]
                 val type = listeTypeVariable[i]
-                println("name : " + name)
-                println("type : " + type)
+                info("name :", name)
+                info("type :", type)
                 listeRes.addAll(
                     GRAPH.getNodes(
                         uri = (if (uri == "UNSET") null else uri),
