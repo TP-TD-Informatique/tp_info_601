@@ -1,4 +1,5 @@
 import interpreter.initGraph
+import interpreter.query
 import logger.init
 import model.Graph
 import view.MainWindow
@@ -17,7 +18,7 @@ fun main(args: Array<String>) {
 
     //query("create (actor {name  :=   wilson ,  firstname:=peter  ,  age:=18   })")
     //query("create (r:relation,a:actor,b:actor )")
-    //select (a:actor WHERE { a.name == wilson} a.node)
+    query("select (actor)")
     //select (a:actor WHERE { a.name == wilson} a.name)
     //select (a:actor,b:actor WHERE { a.name == wilson} a.name)
     //select (a:actor WHERE { a.name == wilson, a.firstname != fred, a.age > 25} a.name)

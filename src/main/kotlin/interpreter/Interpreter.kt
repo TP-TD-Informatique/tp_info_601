@@ -232,7 +232,10 @@ fun select(line: String): ArrayList<Node> {
             }
         }
 
+    }else{
+        listeRes.addAll(GRAPH.getNodes(type = NodeType.valueOf(reste.toUpperCase())))
     }
+
 
     return listeRes
 
