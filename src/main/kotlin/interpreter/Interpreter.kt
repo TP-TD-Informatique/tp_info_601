@@ -1,7 +1,6 @@
 package interpreter
 
 import model.Graph
-import model.Graph.*
 import model.Node
 import model.enums.NodeType
 import model.enums.RelationType
@@ -98,7 +97,14 @@ fun create(line: String): ArrayList<Node> {
             hashMap.put(nomVariable, splitFirst(arg, ","))
         }
         typeType = supprimeEspace(typeType)
-        listeRes.add(GRAPH.createNode(type = NodeType.valueOf(typeType.toUpperCase()), uri = (if (uri == "UNSET") null else uri), name = (if (name == "UNSET") null else name), attributes = hashMap))
+        listeRes.add(
+            GRAPH.createNode(
+                type = NodeType.valueOf(typeType.toUpperCase()),
+                uri = (if (uri == "UNSET") null else uri),
+                name = (if (name == "UNSET") null else name),
+                attributes = hashMap
+            )
+        )
         return listeRes
     } else {
         var typeRelation = splitFirst(reste, ",")
@@ -220,18 +226,22 @@ fun select(line: String): ArrayList<Node> {
                 val type = listeTypeVariable[i]
                 println("name : " + name)
                 println("type : " + type)
-                listeRes.addAll(GRAPH.getNodes(uri = (if (uri == "UNSET") null else uri),
+                listeRes.addAll(
+                    GRAPH.getNodes(
+                        uri = (if (uri == "UNSET") null else uri),
                         name = (if (name == "UNSET") null else name),
                         id = (if (id == "UNSET") null else id.toInt()),
                         type = NodeType.valueOf(type.toUpperCase()),
-                        attributes = (if (hashMapList[i].size > 0) hashMapList[i] else null)))
+                        attributes = (if (hashMapList[i].size > 0) hashMapList[i] else null)
+                    )
+                )
             }
             if (supprimeEspace(reste).toUpperCase() == "DELETE") {
                 delete(listeRes)
             }
         }
 
-    }else{
+    } else {
         listeRes.addAll(GRAPH.getNodes(type = NodeType.valueOf(reste.toUpperCase())))
     }
 

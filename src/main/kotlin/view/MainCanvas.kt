@@ -1,5 +1,7 @@
 package view
 
+import logger.debug
+import logger.info
 import model.Node
 import java.awt.*
 import javax.swing.JTextField
@@ -20,17 +22,23 @@ class MainCanvas(private val nodes: ArrayList<Node>) : Canvas() {
 
         // Fill the background
         background = Color.LIGHT_GRAY
+        /*g2.color = Color.LIGHT_GRAY
+        g2.fillRect(0, 0, width, height)
+
+         */
 
         // Paint result
+        info("Paint ${nodes.size} nodes")
         if (nodes.size > 0) {
             val nb = truncate(sqrt(nodes.size.toDouble())).toInt()
             var i = 0
             var j = 0
             val bord = 50
             val marge = (width - 2 * bord) / nb
+            myNodes.clear()
             for (node in nodes) {
                 myNodes.add(
-                    MyNode(node, Coord(bord + (i * marge), bord + (j * marge)))
+                    MyNode(node, Coord(bord + (i * marge), bord + (j * bord)))
                 )
 
                 i++
