@@ -280,16 +280,14 @@ fun path(line: String): ArrayList<Node> {
 }
 
 fun selectChild (line: String):ArrayList<Node>{
-    var listeRes = ArrayList<Node>()/*
-    var reste = splitLast(line, "(")
-    reste = splitFirst(reste, ")")*/
+    var listeRes = ArrayList<Node>()
 
     var nomNoeud = supprimeEspace(line)
-    var noeud = select(line)
+    var noeuds = select(line)
 
-    if (noeud != null) {
-        listeRes.add(noeud)
+    listeRes.addAll(noeuds)
 
+    noeuds.forEach { noeud ->
         noeud.relations.forEach {
             listeRes.add(it.second)
         }
