@@ -342,7 +342,7 @@ class Graph(
      *
      * @return The list of Node between nd1 and nd2
      */
-    fun pathBetweenTwoNodes(nd1: Int, nd2: Int): Array<Node> {
+    fun pathBetweenTwoNodes(nd1: Int, nd2: Int): ArrayList<Node> {
         val node1 = getNode(id = nd1)
         val node2 = getNode(id = nd2)
         val result = Stack<Node>()
@@ -370,7 +370,7 @@ class Graph(
             }
         }
 
-        return result.toArray() as Array<Node>
+        return ArrayList<Node>(result)
     }
 
     /**

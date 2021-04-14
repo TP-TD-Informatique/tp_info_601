@@ -1,8 +1,8 @@
 package interpreter
 
 import logger.debug
-import logger.info
 import logger.error
+import logger.info
 import model.Graph
 import model.Node
 import model.enums.NodeType
@@ -29,7 +29,7 @@ fun query(line: String): ArrayList<Node> {
         return create(restLine)
     } else if (firstWord == "SELECT") {
         return select(restLine)
-    } else if(firstWord == "PATH"){
+    } else if (firstWord == "PATH") {
         return path(restLine)
     } else if(firstWord == "SELECTCHILD"){
         return selectChild(restLine)
@@ -261,18 +261,18 @@ fun select(line: String): ArrayList<Node> {
 
 }
 
-fun path(line: String):ArrayList<Node>{
+fun path(line: String): ArrayList<Node> {
     var listeRes = ArrayList<Node>()
     var reste = splitLast(line, "(")
     reste = splitFirst(reste, ")")
 
-    var nomNoeud1 = supprimeEspace(splitFirst(reste,","))
-    var nomNoeud2 = supprimeEspace(splitLast(reste,","))
+    var nomNoeud1 = supprimeEspace(splitFirst(reste, ","))
+    var nomNoeud2 = supprimeEspace(splitLast(reste, ","))
 
     var noeud1 = GRAPH.getNode(name = nomNoeud1)
     var noeud2 = GRAPH.getNode(name = nomNoeud2)
 
-    if((noeud1 != null)&&noeud2 != null)){
+    if ((noeud1 != null) && noeud2 != null) {
         listeRes.addAll(GRAPH.pathBetweenTwoNodes(noeud1.id, noeud2.id))
     }
 
@@ -286,6 +286,7 @@ fun selectChild (line: String):ArrayList<Node>{
 
     var nomNoeud = supprimeEspace(reste)
     var noeud = GRAPH.getNode(name = nomNoeud)
+
 
     listeRes.add(noeud)
 
