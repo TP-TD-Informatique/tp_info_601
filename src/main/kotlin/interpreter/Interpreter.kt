@@ -17,7 +17,7 @@ fun interpreterError(msg: String) {
     println(msg)
 }
 
-fun query(line: String):ArrayList<Node> {
+fun query(line: String): ArrayList<Node> {
     var firstWord = splitFirst(line, " ")
     var restLine = splitLast(line, " ")
     firstWord = firstWord.toUpperCase()
@@ -27,7 +27,7 @@ fun query(line: String):ArrayList<Node> {
         return create(restLine)
     } else if (firstWord == "SELECT") {
         return select(restLine)
-    } else  {
+    } else {
         interpreterError("error")
     }
     return ArrayList<Node>()
@@ -50,7 +50,7 @@ fun splitLast(line: String, sep: String): String {
     }
 }
 
-fun create(line: String):ArrayList<Node> {
+fun create(line: String): ArrayList<Node> {
     var listeRes = ArrayList<Node>()
     var nomVariable = ""
     var hashMap = HashMap<String, Any?>()
@@ -109,15 +109,15 @@ fun create(line: String):ArrayList<Node> {
 
         var noeud1 = GRAPH.getNode(name = nomNoeud1)
         var noeud2 = GRAPH.getNode(name = nomNoeud2)
-        if((noeud1 != null)&&(noeud2 != null)){
+        if ((noeud1 != null) && (noeud2 != null)) {
             GRAPH.createRelation(noeud1, noeud2, RelationType.valueOf(typeRelation))
         }
     }
     return ArrayList()
 }
 
-fun delete(listNode:ArrayList<Node>) {
-    for (i in listNode){
+fun delete(listNode: ArrayList<Node>) {
+    for (i in listNode) {
         GRAPH.deleteNode(i.id)
     }
 }
@@ -218,10 +218,17 @@ fun select(line: String): ArrayList<Node> {
                 val uri = listeUri[i]
                 val id = listeId[i]
                 val type = listeTypeVariable[i]
-                listeRes.addAll(GRAPH.getNodes(uri = (if (uri == "UNSET") null else uri), name = (if (name == "UNSET") null else name), id = (if (id == "UNSET") null else id.toInt()), type = NodeType.valueOf(type.toUpperCase()), attributes = hashMapList[i]))
+                println("name : " + name)
+                println("type : " + type)
+                listeRes.addAll(GRAPH.getNodes(uri = (if (uri == "UNSET") null else uri),
+                        name = (if (name == "UNSET") null else name),
+                        id = (if (id == "UNSET") null else id.toInt()),
+                        type = NodeType.valueOf(type.toUpperCase()),
+                        attributes = hashMapList[i]))
+                println(listeRes)
             }
             if (supprimeEspace(reste).toUpperCase() == "DELETE") {
-              delete(listeRes)
+                delete(listeRes)
             }
         }
 
