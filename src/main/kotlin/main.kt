@@ -8,12 +8,11 @@ import view.MainWindow
 fun main(args: Array<String>) {
     init()
     val graph = Graph()
-    val databaseName = "movies"
-    graph.load(databaseName)
+    graph.load("movies")
     initGraph(graph)
 
     // Vue GUI principale au lancement
-    MainWindow()
+    MainWindow(graph)
     //val homeView = MainView("Knowledge Graph")
     //homeView.isVisible = true
 
@@ -51,7 +50,5 @@ fun main(args: Array<String>) {
        select (<nomVariable>:<nomType> where { <nomVariable>.<nomAttribut> == <valeurAttribut>} return <noeud>)
 
        */
-    graph.save(databaseName)
-    exit()
 }
 

@@ -1,14 +1,18 @@
 package view
 
 import interpreter.query
+import logger.exit
+import model.Graph
 import model.Node
 import java.awt.*
+import java.awt.event.WindowAdapter
+import java.awt.event.WindowEvent
 import javax.swing.*
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 import javax.swing.border.MatteBorder
 
-class MainWindow : JFrame("Knowledge graph") {
+class MainWindow(private val graph: Graph) : JFrame("Knowledge graph") {
     private lateinit var input: JTextField
     private lateinit var queryButton: JButton
     private lateinit var canvas: MainCanvas
@@ -21,6 +25,13 @@ class MainWindow : JFrame("Knowledge graph") {
         defaultCloseOperation = WindowConstants.DISPOSE_ON_CLOSE
 
         drawContent()
+
+        addWindowListener(object : WindowAdapter() {
+            override fun windowClosing(e: WindowEvent?) {
+                graph.save("movies")
+                exit()
+            }
+        })
 
         isVisible = true
     }
