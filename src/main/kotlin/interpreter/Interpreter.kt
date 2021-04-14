@@ -31,7 +31,7 @@ fun query(line: String): ArrayList<Node> {
         return select(restLine)
     } else if (firstWord == "PATH") {
         return path(restLine)
-    } else if(firstWord == "SELECTCHILD"){
+    } else if (firstWord == "SELECTCHILD") {
         return selectChild(restLine)
     } else {
         interpreterError("error")
@@ -155,7 +155,6 @@ fun select(line: String): ArrayList<Node> {
         var phrase = splitFirst(reste, "{")
         reste = splitLast(reste, "{")
 
-
         while (phrase.indexOf(",") != -1) {
             listeVariable.add(splitFirst(phrase, ":"))
             phrase = splitLast(phrase, ":")
@@ -177,7 +176,6 @@ fun select(line: String): ArrayList<Node> {
             listeName.add("UNSET")
             listeUri.add("UNSET")
             listeId.add("UNSET")
-
         }
         phrase = supprimeEspace(phrase)
         if (phrase.toUpperCase() == "WHERE") {
@@ -246,19 +244,13 @@ fun select(line: String): ArrayList<Node> {
                     )
                 )
             }
-            if (supprimeEspace(reste).toUpperCase() == "DELETE") {
+            if (supprimeEspace(reste).toUpperCase() == "DELETE")
                 delete(listeRes)
-            }
         }
-
-    } else {
+    } else
         listeRes.addAll(GRAPH.getNodes(type = NodeType.valueOf(reste.toUpperCase())))
-    }
-
 
     return listeRes
-
-
 }
 
 fun path(line: String): ArrayList<Node> {
@@ -279,7 +271,7 @@ fun path(line: String): ArrayList<Node> {
     return listeRes
 }
 
-fun selectChild (line: String):ArrayList<Node>{
+fun selectChild(line: String): ArrayList<Node> {
     var listeRes = ArrayList<Node>()
 
     var nomNoeud = supprimeEspace(line)

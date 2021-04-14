@@ -8,7 +8,6 @@ import java.awt.Graphics
 import java.awt.Graphics2D
 import kotlin.math.round
 import kotlin.math.sqrt
-import kotlin.math.truncate
 
 class MainCanvas(private val nodes: ArrayList<Node>) : Canvas() {
     private class Coord(val x: Int, val y: Int)
