@@ -1,10 +1,11 @@
 package view
 
-import logger.debug
 import logger.info
 import model.Node
-import java.awt.*
-import javax.swing.JTextField
+import java.awt.Canvas
+import java.awt.Color
+import java.awt.Graphics
+import java.awt.Graphics2D
 import kotlin.math.sqrt
 import kotlin.math.truncate
 
@@ -56,10 +57,10 @@ class MainCanvas(private val nodes: ArrayList<Node>) : Canvas() {
                     if (node2 != null) {
                         val myNode2 = myNodes.first { it.node == node2 }
                         // Draw line
-                        g2.drawLine(node.coord.x, node.coord.y, myNode2.coord.x, myNode2.coord.y)
+                        g2.drawLine(node.coord.x + 10, node.coord.y + 10, myNode2.coord.x + 10, myNode2.coord.y + 10)
                         // Draw Text
-                        val x = (myNode2.coord.x + node.coord.x) / 2
-                        val y = (myNode2.coord.y + node.coord.y) / 2
+                        val x = ((myNode2.coord.x + node.coord.x) / 2)
+                        val y = ((myNode2.coord.y + node.coord.y) / 2)
                         g2.drawString(relation.type.toString(), x, y)
                     }
                 }

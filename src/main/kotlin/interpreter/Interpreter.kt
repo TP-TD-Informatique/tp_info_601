@@ -1,5 +1,6 @@
 package interpreter
 
+import logger.debug
 import logger.info
 import logger.error
 import model.Graph
@@ -110,15 +111,18 @@ fun create(line: String): ArrayList<Node> {
         return listeRes
     } else {
         var typeRelation = supprimeEspace(splitFirst(reste, ","))
+        debug("reste : $reste")
         reste = splitLast(reste, ",")
+        debug("reste : $reste")
         var nomNoeud1 = supprimeEspace(splitFirst(reste, ","))
         reste = splitLast(reste, ",")
         var nomNoeud2 = supprimeEspace(reste)
 
+        debug("nom1 : $nomNoeud1 | nom2 : $nomNoeud2")
         var noeud1 = GRAPH.getNode(name = nomNoeud1)
         var noeud2 = GRAPH.getNode(name = nomNoeud2)
         if ((noeud1 != null) && (noeud2 != null)) {
-            GRAPH.createRelation(noeud1, noeud2, RelationType.valueOf(typeRelation))
+            GRAPH.createRelation(noeud1, noeud2, RelationType.valueOf(typeRelation.toUpperCase()))
         }
     }
     return ArrayList()
