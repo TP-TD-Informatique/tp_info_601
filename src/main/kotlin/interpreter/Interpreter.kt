@@ -107,11 +107,11 @@ fun create(line: String): ArrayList<Node> {
         )
         return listeRes
     } else {
-        var typeRelation = splitFirst(reste, ",")
+        var typeRelation = supprimeEspace(splitFirst(reste, ","))
         reste = splitLast(reste, ",")
-        var nomNoeud1 = splitFirst(reste, ",")
+        var nomNoeud1 = supprimeEspace(splitFirst(reste, ","))
         reste = splitLast(reste, ",")
-        var nomNoeud2 = reste
+        var nomNoeud2 = supprimeEspace(reste)
 
         var noeud1 = GRAPH.getNode(name = nomNoeud1)
         var noeud2 = GRAPH.getNode(name = nomNoeud2)
