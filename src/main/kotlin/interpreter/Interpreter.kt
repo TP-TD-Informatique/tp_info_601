@@ -280,12 +280,12 @@ fun path(line: String): ArrayList<Node> {
 }
 
 fun selectChild (line: String):ArrayList<Node>{
-    var listeRes = ArrayList<Node>()
+    var listeRes = ArrayList<Node>()/*
     var reste = splitLast(line, "(")
-    reste = splitFirst(reste, ")")
+    reste = splitFirst(reste, ")")*/
 
-    var nomNoeud = supprimeEspace(reste)
-    var noeud = GRAPH.getNode(name = nomNoeud)
+    var nomNoeud = supprimeEspace(line)
+    var noeud = select(line)
 
     if (noeud != null) {
         listeRes.add(noeud)
