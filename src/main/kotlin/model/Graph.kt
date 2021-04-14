@@ -452,7 +452,7 @@ class Graph(
             val dos = DataOutputStream(FileOutputStream("./databases/$databaseName.index"))
             dos.writeInt(index)
             dos.close()
-            success("Index saved !")
+            success("Index saved ! $index")
         } catch (e: IOException) {
             error("Error when save index : ${e.message}")
         }
@@ -474,7 +474,7 @@ class Graph(
         try {
             val ois = ObjectInputStream(FileInputStream("./databases/$databaseName.nodes"))
             nodes = ois.readObject() as ArrayList<Node>
-            success("Nodes loaded !")
+            success("Nodes loaded ! ${nodes.size}")
         } catch (e: Exception) {
             error("Error when load nodes : ${e.message}")
         }
@@ -485,7 +485,7 @@ class Graph(
         try {
             val ois = ObjectInputStream(FileInputStream("./databases/$databaseName.relations"))
             relations = ois.readObject() as ArrayList<Relation>
-            success("Relations loaded !")
+            success("Relations loaded ! ${relations.size}")
         } catch (e: Exception) {
             error("Error when load relations : ${e.message}")
         }
@@ -496,7 +496,7 @@ class Graph(
         try {
             val dis = DataInputStream(FileInputStream("./databases/$databaseName.index"))
             index = dis.readInt()
-            success("Index loaded")
+            success("Index loaded $index")
         } catch (e: Exception) {
             error("Error when load index : ${e.message}")
         }
