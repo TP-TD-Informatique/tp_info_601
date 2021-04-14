@@ -42,11 +42,18 @@ class MainCanvas(private val nodes: ArrayList<Node>) : Canvas() {
 
             // Paint relations
             g2.color = Color.BLACK
-            // TODO : g2.drawLine(x1, y1, x2, y2)
             for (node in myNodes) {
                 node.node.relations.forEach { relation ->
-                    //g2.drawLine(node.coord.x, node.node.relations[j].second.relations[], "PLAYED_IN", g2)
-                    g2.drawLine(node.coord.x, node.coord.y, relation.second.id, relation.second.id)
+                    val node2 = nodes.firstOrNull { it == relation.second }
+                    if (node2 != null) {
+                        val myNode2 = myNodes.first { it.node == node2 }
+                        // Draw line
+                        g2.drawLine(node.coord.x, node.coord.y, myNode2.coord.x, myNode2.coord.y)
+                        // Draw Text
+                        val x = (myNode2.coord.x + node.coord.x) / 2
+                        val y = (myNode2.coord.y + node.coord.y) / 2
+                        g2.drawString(relation.type.toString(), x, y)
+                    }
                 }
             }
 
