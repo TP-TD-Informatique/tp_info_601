@@ -161,7 +161,7 @@ class Graph(
         val res = ArrayList<Node>()
 
         for (i in offset until (offset + limit)) {
-            getNode(name, uri, type, attributes, id, offset)?.let { res.add(it) }
+            getNode(name, uri, type, attributes, id, i)?.let { res.add(it) }
         }
         success(res.size, " node found")
 
