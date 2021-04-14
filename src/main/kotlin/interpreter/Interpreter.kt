@@ -287,11 +287,12 @@ fun selectChild (line: String):ArrayList<Node>{
     var nomNoeud = supprimeEspace(reste)
     var noeud = GRAPH.getNode(name = nomNoeud)
 
+    if (noeud != null) {
+        listeRes.add(noeud)
 
-    listeRes.add(noeud)
-
-    noeud.relations.forEach{
-        listeRes.add(it.second)
+        noeud.relations.forEach {
+            listeRes.add(it.second)
+        }
     }
     return listeRes
 }
