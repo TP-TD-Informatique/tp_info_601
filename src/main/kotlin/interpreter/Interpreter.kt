@@ -31,6 +31,8 @@ fun query(line: String): ArrayList<Node> {
         return select(restLine)
     } else if (firstWord == "PATH") {
         return path(restLine)
+    } else if(firstWord == "SELECTCHILD"){
+        return selectChild(restLine)
     } else {
         interpreterError("error")
     }
@@ -274,6 +276,23 @@ fun path(line: String): ArrayList<Node> {
         listeRes.addAll(GRAPH.pathBetweenTwoNodes(noeud1.id, noeud2.id))
     }
 
+    return listeRes
+}
+
+fun selectChild (line: String):ArrayList<Node>{
+    var listeRes = ArrayList<Node>()
+    var reste = splitLast(line, "(")
+    reste = splitFirst(reste, ")")
+
+    var nomNoeud = supprimeEspace(reste)
+    var noeud = GRAPH.getNode(name = nomNoeud)
+
+
+    listeRes.add(noeud)
+
+    noeud.relations.forEach{
+        listeRes.add(it.second)
+    }
     return listeRes
 }
 
