@@ -1,5 +1,4 @@
 import interpreter.initGraph
-import logger.exit
 import logger.init
 import model.Graph
 import view.MainWindow

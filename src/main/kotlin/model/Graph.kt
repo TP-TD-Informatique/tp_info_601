@@ -116,6 +116,11 @@ class Graph(
                             return it
                         }
                     }
+                } else { // attributes == null
+                    if (off-- == 0) {
+                        success("Node found ", it)
+                        return it
+                    }
                 }
             } else if (name == null && uri == null && type == null && id == null && attributes == null) {
                 if (off-- == 0) {
@@ -438,7 +443,7 @@ class Graph(
         info("Save ${relations.size} relations")
         try {
             val oos = ObjectOutputStream(FileOutputStream("./databases/$databaseName.relations"))
-            oos.writeObject(nodes)
+            oos.writeObject(relations)
             oos.close()
             success("${relations.size} relations saved !")
         } catch (e: IOException) {
