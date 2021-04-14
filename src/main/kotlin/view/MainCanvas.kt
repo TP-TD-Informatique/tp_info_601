@@ -26,7 +26,7 @@ class MainCanvas(private val nodes: ArrayList<Node>) : Canvas() {
             val nb = truncate(sqrt(nodes.size.toDouble())).toInt()
             var i = 0
             var j = 0
-            val bord = 10
+            val bord = 50
             val marge = (width - 2 * bord) / nb
             for (node in nodes) {
                 myNodes.add(
@@ -60,7 +60,7 @@ class MainCanvas(private val nodes: ArrayList<Node>) : Canvas() {
             // Paint nodes
             for (node in myNodes) {
                 g2.color = Color.RED
-                g2.fillOval(node.coord.x, node.coord.y, 10, 10)
+                g2.fillOval(node.coord.x, node.coord.y, 20, 20)
 
                 g2.color = Color.BLACK
                 if (node.node.name != null)
