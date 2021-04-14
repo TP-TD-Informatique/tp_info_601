@@ -224,8 +224,7 @@ fun select(line: String): ArrayList<Node> {
                         name = (if (name == "UNSET") null else name),
                         id = (if (id == "UNSET") null else id.toInt()),
                         type = NodeType.valueOf(type.toUpperCase()),
-                        attributes = hashMapList[i]))
-                println(listeRes)
+                        attributes = (if (hashMapList[i].size > 0) hashMapList[i] else null)))
             }
             if (supprimeEspace(reste).toUpperCase() == "DELETE") {
                 delete(listeRes)
