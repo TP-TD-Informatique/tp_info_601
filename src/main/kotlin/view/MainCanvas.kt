@@ -6,6 +6,7 @@ import java.awt.Canvas
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.Graphics2D
+import kotlin.math.round
 import kotlin.math.sqrt
 import kotlin.math.truncate
 
@@ -22,7 +23,7 @@ class MainCanvas(private val nodes: ArrayList<Node>) : Canvas() {
         val g2 = g as Graphics2D
 
         // Fill the background
-        background = Color.LIGHT_GRAY
+        background = Color.WHITE
         /*g2.color = Color.LIGHT_GRAY
         g2.fillRect(0, 0, width, height)
 
@@ -31,7 +32,7 @@ class MainCanvas(private val nodes: ArrayList<Node>) : Canvas() {
         // Paint result
         info("Paint ${nodes.size} nodes")
         if (nodes.size > 0) {
-            val nb = truncate(sqrt(nodes.size.toDouble())).toInt()
+            val nb = round(sqrt(nodes.size.toDouble())).toInt()
             var i = 0
             var j = 0
             val bord = 50
@@ -39,7 +40,7 @@ class MainCanvas(private val nodes: ArrayList<Node>) : Canvas() {
             myNodes.clear()
             for (node in nodes) {
                 myNodes.add(
-                    MyNode(node, Coord(bord + (i * marge), bord + (j * bord)))
+                    MyNode(node, Coord(bord + (i * marge), bord + (j * marge)))
                 )
 
                 i++
@@ -50,17 +51,18 @@ class MainCanvas(private val nodes: ArrayList<Node>) : Canvas() {
             }
 
             // Paint relations
-            g2.color = Color.BLACK
             for (node in myNodes) {
                 node.node.relations.forEach { relation ->
                     val node2 = nodes.firstOrNull { it == relation.second }
                     if (node2 != null) {
                         val myNode2 = myNodes.first { it.node == node2 }
                         // Draw line
+                        g2.color = Color.BLACK
                         g2.drawLine(node.coord.x + 10, node.coord.y + 10, myNode2.coord.x + 10, myNode2.coord.y + 10)
                         // Draw Text
                         val x = ((myNode2.coord.x + node.coord.x) / 2)
                         val y = ((myNode2.coord.y + node.coord.y) / 2)
+                        g2.color = Color(0, 98, 102)
                         g2.drawString(relation.type.toString(), x, y)
                     }
                 }
@@ -68,7 +70,7 @@ class MainCanvas(private val nodes: ArrayList<Node>) : Canvas() {
 
             // Paint nodes
             for (node in myNodes) {
-                g2.color = Color.RED
+                g2.color = Color(30, 55, 153)
                 g2.fillOval(node.coord.x, node.coord.y, 20, 20)
 
                 g2.color = Color.BLACK
